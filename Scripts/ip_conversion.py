@@ -1,4 +1,5 @@
 import ipaddress
+import pandas as pd
 
 def convert_int_to_ip(ip_int):
     try:
