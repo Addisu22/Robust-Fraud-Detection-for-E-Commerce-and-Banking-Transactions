@@ -110,13 +110,3 @@ def train_evaluate_shap(fraud_df, target_column="Class", sample_size=None, test_
     shap_values = explainer(X_test)
     
     return clf, report_df, explainer, shap_values, X_test
-
-# ------------------------
-# Run on fraud dataset (sample 3,500 records)
-# ------------------------
-clf, report_df, explainer, shap_values, X_test = train_evaluate_shap(fraud_df,target_column="Class", sample_size=3500, test_size=0.2, random_state=42)
-
-# ------------------------
-# Example SHAP plot
-# ------------------------
-shap.summary_plot(shap_values, X_test)
