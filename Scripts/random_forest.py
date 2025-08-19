@@ -1,23 +1,42 @@
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+from IPython.display import display
 
-def Class_prediction_report(fraud_df, target_col="Class", test_size=0.2, random_state=1):
+def train_and_evaluate_rf(fraud_df, target_column="Class", test_size=0.2, random_state=1):
+    """
+    Train a Random Forest model and print classification report.
+    
+    Parameters:
+        data (pd.DataFrame): Dataset containing features + target.
+        target_column (str): Name of target column (default: 'Class').
+        test_size (float): Test split ratio (default: 0.2).
+        random_state (int): Random seed for reproducibility.
+    
+    Returns:
+        clf (RandomForestClassifier): Trained model.
+        report (str): Classification report.
+        (X_train, X_test, y_train, y_test): Train-test split for reuse.
+    """
     # Split features and target
-    X = fraud_df.drop(target_col, axis=1)
-    y = fraud_df[target_col]
+    X = fraud_df.drop(target_column, axis=1)
+    y = fraud_df[target_column]
 
     # Train-test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
-    # Train Random Forest
-    fraud_clf = RandomForestClassifier(random_state=random_state)
-    fraud_clf.fit(X_train, y_train)
+    # Train model
+    clf = RandomForestClassifier(random_state=random_state)
+    clf.fit(X_train, y_train)
 
     # Predict
-    y_pred = fraud_clf.predict(X_test)
+    y_pred = clf.predict(X_test)
 
-    # Report
-    print(classification_report(y_test, y_pred))
+    # Generate report
+    report = classification_report(y_test, y_pred)
 
-    return fraud_clf
+    report__rf_df = pd.DataFrame(report).transpose()
+    display(report)
+    
+    return clf, report, (X_train, X_test, y_train, y_test)
