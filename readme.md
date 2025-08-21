@@ -7,6 +7,18 @@ This project focuses on building robust fraud detection systems for both e-comme
 
 Fraud detection is a critical challenge in financial technology. False positives (flagging genuine transactions as fraud) frustrate customers, while false negatives (failing to catch fraud) result in direct financial loss. Our models aim to minimize both risks, while supporting real-time monitoring and explainability.
 
+Development Setup
+=================
+Create virtual environment :
+We have used Windows with Python 3.13
+
+python -m venv .venv
+
+.venv\Scripts\activate
+
+Install dependencies
+===================
+pip install -r requirements.txt
 
 General System Architecture
 ==========================
